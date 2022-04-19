@@ -1,42 +1,14 @@
-package App.data.register;
+package App.data.user.put;
 
-public class RegisterResponse {
+public class UpdateResponse {
 
     private Integer age;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String male;
-    private String email;
-    private String token;
 
-    public RegisterResponse(Integer age, String firstName, String lastName, String phoneNumber, String male, String email, String token) {
-        this.age = age;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.male = male;
-        this.email = email;
-        this.token = token;
-    }
-
-    public RegisterResponse() {
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public UpdateResponse() {
     }
 
     public Integer getAge() {

@@ -1,4 +1,4 @@
-package App.data.login;
+package App.data.user.login;
 
 public class LoginRequest {
 

@@ -1,6 +1,6 @@
-package App.data.register;
+package App.data.user.get;
 
-public class RegisterRequest {
+public class UserResponse {
 
     private Integer age;
     private String firstName;
@@ -8,14 +8,27 @@ public class RegisterRequest {
     private String phoneNumber;
     private String male;
     private String email;
-    private String password;
+    private String token;
 
-    public String getPassword() {
-        return password;
+    public UserResponse(Integer age, String firstName, String lastName, String phoneNumber, String male, String email, String token) {
+        this.age = age;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.male = male;
+        this.email = email;
+        this.token = token;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public UserResponse() {
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getEmail() {
