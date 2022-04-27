@@ -2,21 +2,21 @@ package App.helpers;
 
 public class TokenDecryption {
 
-    private String email;
+    private String first;
     private String token;
 
     public TokenDecryption(String allToken) {
         String[] words = allToken.split(" ");
-        this.email = words[0];
+        this.first = words[0];
         this.token = words[1];
     }
 
-    public String getEmail() {
-        return email;
+    public String getFirst() {
+        return first;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFirst(String first) {
+        this.first = first;
     }
 
     public String getToken() {

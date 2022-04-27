@@ -29,8 +29,6 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final String sharedKey = "SHARED_KEY";
-
     private static final String SUCCESS_STATUS = "success";
     private static final String ERROR_STATUS = "error";
     private static final int CODE_SUCCESS = 100;
@@ -53,37 +51,11 @@ public class AuthController {
         }
     }
 
-    @GetMapping
-    public BaseResponse showStatus() {
-        BaseResponse response = new BaseResponse(SUCCESS_STATUS, 1);
-        response.setData(new ResponseGet(new Date()));
-        return response;
-    }
-
-    @PostMapping("/pay")
-    public BaseResponse pay(@RequestParam(value = "key") String key, @RequestBody PaymentRequest request) {
-
-        final BaseResponse response;
-
-        if (sharedKey.equalsIgnoreCase(key)) {
-            int userId = request.getUserId();
-            String itemId = request.getItemId();
-            double discount = request.getDiscount();
-            // Process the request
-            // ....
-            // Return success response to the client.
-            response = new BaseResponse(SUCCESS_STATUS, CODE_SUCCESS);
-        } else {
-            response = new BaseResponse(ERROR_STATUS, LOGIN_FAILURE);
-        }
-        return response;
-    }
-
     @GetMapping("/user")
     public BaseResponse getUser(@RequestParam(value = "token") String token) throws ExecutionException, InterruptedException {
         TokenDecryption tokenDecryption = new TokenDecryption(token);
         BaseResponse response = new BaseResponse(SUCCESS_STATUS, CODE_SUCCESS);
-        DocumentReference docRef = connect.collection("users").document(tokenDecryption.getEmail());
+        DocumentReference docRef = connect.collection("users").document(tokenDecryption.getFirst());
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
         if (document.exists()) {
@@ -94,7 +66,7 @@ public class AuthController {
                         document.getString("lastName"),
                         document.getString("phoneNumber"),
                         document.getString("male"),
-                        tokenDecryption.getEmail(),
+                        tokenDecryption.getFirst(),
                         document.getString("token"));
                 response.setData(userResponse);
             } else {
@@ -173,21 +145,21 @@ public class AuthController {
 
         TokenDecryption tokenDecryption = new TokenDecryption(token);
         BaseResponse response = new BaseResponse(SUCCESS_STATUS, CODE_SUCCESS);
-        DocumentReference docRef = connect.collection("users").document(tokenDecryption.getEmail());
+        DocumentReference docRef = connect.collection("users").document(tokenDecryption.getFirst());
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
         if (document.exists()) {
             if (Objects.equals(document.getString("token"), token)||
                     (Objects.equals(adminToken, tokenDecryption.getToken()))) {
                 docRef.delete();
-                response.setData(new DeleteResponse("Пользователь с email " + tokenDecryption.getEmail() + " успешно удалён"));
+                response.setData(new DeleteResponse("Пользователь с email " + tokenDecryption.getFirst() + " успешно удалён"));
             }else{
                 response = new BaseResponse(ERROR_STATUS, TOKEN_FAILURE);
                 response.setData(new Error("Неверный токен"));
             }
         } else {
             response = new BaseResponse(ERROR_STATUS, EMAIL_FAILURE);
-            response.setData(new Error("Пользователя с таким token не существует"));
+            response.setData(new Error("Пользователя с таким email не существует"));
         }
         return response;
     }
@@ -197,7 +169,7 @@ public class AuthController {
 
         TokenDecryption tokenDecryption = new TokenDecryption(request.getToken());
         BaseResponse response = new BaseResponse(SUCCESS_STATUS, CODE_SUCCESS);
-        DocumentReference docRef = connect.collection("users").document(tokenDecryption.getEmail());
+        DocumentReference docRef = connect.collection("users").document(tokenDecryption.getFirst());
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
         if (document.exists()) {
@@ -228,7 +200,7 @@ public class AuthController {
             }
         } else {
             response = new BaseResponse(ERROR_STATUS, EMAIL_FAILURE);
-            response.setData(new Error("Пользователя с таким token не существует"));
+            response.setData(new Error("Пользователя с таким email не существует"));
         }
         return response;
     }
