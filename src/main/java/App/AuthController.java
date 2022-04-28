@@ -19,7 +19,6 @@ import com.google.common.collect.ImmutableMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -113,7 +112,6 @@ public class AuthController {
                     randomUUIDString);
 
             ApiFuture<WriteResult> result = docRef.set(data);
-            System.out.println("Update time : " + result.get().getUpdateTime());
             response.setData(registerResponse);
         }
         return response;
@@ -186,7 +184,6 @@ public class AuthController {
                                 .put("token", request.getToken())
                                 .build();
                 ApiFuture<WriteResult> result = docRef.set(data);
-                System.out.println("Update time : " + result.get().getUpdateTime());
                 UpdateResponse updateResponse = new UpdateResponse();
                 updateResponse.setAge(request.getAge());
                 updateResponse.setFirstName(request.getFirstName());

@@ -2,8 +2,6 @@ package App;
 
 import App.data.BaseResponse;
 import App.data.Error;
-import App.data.PaymentRequest;
-import App.data.ResponseGet;
 import App.data.hotel.add.AddHotelRequest;
 import App.data.hotel.get.GetHotelResponse;
 import App.data.hotel.get.GetHotelsResponse;
@@ -11,13 +9,6 @@ import App.data.hotel.get.Hotel;
 import App.data.hotel.put.PutHotelRequest;
 import App.data.hotel.put.PutHotelResponse;
 import App.data.user.delete.DeleteResponse;
-import App.data.user.get.UserResponse;
-import App.data.user.login.LoginRequest;
-import App.data.user.login.LoginResponse;
-import App.data.user.put.UpdateRequest;
-import App.data.user.put.UpdateResponse;
-import App.data.user.register.RegisterRequest;
-import App.data.user.register.RegisterResponse;
 import App.db.FirebaseConnect;
 import App.helpers.AdminKey;
 import App.helpers.TokenDecryption;
@@ -113,7 +104,6 @@ public class HotelController {
                                 .put("description", request.getDescription())
                                 .build();
                 ApiFuture<WriteResult> result = docRef.set(data);
-                System.out.println("Update time : " + result.get().getUpdateTime());
                 response.setData(request);
             }
         } else {
@@ -163,7 +153,6 @@ public class HotelController {
                                 .put("description", request.getDescription())
                                 .build();
                 ApiFuture<WriteResult> result = docRef.set(data);
-                System.out.println("Update time : " + result.get().getUpdateTime());
                 PutHotelResponse putHotelResponse = new PutHotelResponse();
                 putHotelResponse.setName(tokenDecryption.getFirst());
                 putHotelResponse.setAddress(request.getAddress());

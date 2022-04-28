@@ -8,9 +8,6 @@ import App.data.booking.get.Booking;
 import App.data.booking.get.GetBookingResponse;
 import App.data.booking.get.GetBookingsResponse;
 import App.data.booking.put.PutBookingRequest;
-import App.data.hotel.get.GetHotelResponse;
-import App.data.hotel.get.GetHotelsResponse;
-import App.data.hotel.get.Hotel;
 import App.data.user.delete.DeleteResponse;
 import App.db.FirebaseConnect;
 import App.helpers.AdminKey;
@@ -101,7 +98,6 @@ public class BookingController {
         return response;
     }
 
-    //done
     @PostMapping()
     public BaseResponse addBooking(@RequestBody AddBookingRequest request) throws
             ExecutionException, InterruptedException {
@@ -140,7 +136,6 @@ public class BookingController {
                     addBookingResponse.setPerson(request.getPerson());
                     addBookingResponse.setNameHotel(request.getNameHotel());
                     addBookingResponse.setId(uuid);
-                    System.out.println("Update time : " + result.get().getUpdateTime());
                     response.setData(addBookingResponse);
                 } else {
                     response = new BaseResponse(ERROR_STATUS, HOTEL_FAILURE);
@@ -160,7 +155,6 @@ public class BookingController {
         return response;
     }
 
-    //done
     @DeleteMapping()
     public BaseResponse deleteBooking(@RequestParam(value = "token") String token,
                                       @RequestParam(value = "id") String id) throws ExecutionException, InterruptedException {
@@ -217,7 +211,6 @@ public class BookingController {
                 addBookingResponse.setPerson(request.getPerson());
                 addBookingResponse.setNameHotel(request.getNameHotel());
                 addBookingResponse.setId(id);
-                System.out.println("Update time : " + result.get().getUpdateTime());
                 response.setData(addBookingResponse);
             } else {
                 response = new BaseResponse(ERROR_STATUS, TOKEN_FAILURE);
